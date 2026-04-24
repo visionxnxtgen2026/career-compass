@@ -98,6 +98,34 @@ const RoleDetail = () => {
           </Section>
         </div>
 
+        {/* Apply Now */}
+        <div className="rounded-2xl bg-card border p-6 mb-6 flex flex-wrap items-center justify-between gap-4">
+          <div className="flex items-center gap-4">
+            <div className={`grid h-12 w-12 place-items-center rounded-xl bg-${role.color}-soft text-${role.color}`}>
+              {apply ? <ExternalLink className="h-6 w-6" /> : <Info className="h-6 w-6" />}
+            </div>
+            <div>
+              <div className="font-bold">Apply for {role.name}</div>
+              <div className="text-xs text-muted-foreground">
+                {apply
+                  ? "You'll be redirected to the official portal to apply."
+                  : "Application info is not available yet for this role. Please check back soon."}
+              </div>
+            </div>
+          </div>
+          {apply ? (
+            <a href={apply.url} target="_blank" rel="noopener noreferrer">
+              <Button className="bg-gradient-primary shadow-glow gap-2">
+                {apply.label} <ExternalLink className="h-4 w-4" />
+              </Button>
+            </a>
+          ) : (
+            <Button disabled variant="outline" className="gap-2">
+              Apply Link Unavailable
+            </Button>
+          )}
+        </div>
+
         {/* CTA */}
         <div className="rounded-2xl bg-primary-soft border border-primary/20 p-6 flex flex-wrap items-center justify-between gap-4">
           <div className="flex items-center gap-4">
