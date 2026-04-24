@@ -19,22 +19,37 @@ const StreamRoles = () => {
   return (
     <PageLayout>
       <section className="container-page pt-6 pb-16">
-        <div className="mb-6"><BackButton /></div>
+        <div className="flex items-center justify-between mb-6 gap-4">
+          <BackButton />
+          <div className="text-sm text-muted-foreground flex items-center gap-1.5">
+            <MapPin className="h-4 w-4 text-primary" />
+            {location}
+          </div>
+        </div>
 
         <div className="text-center lg:text-left mb-10">
           <h1 className="text-3xl sm:text-4xl font-bold">
             <span className={`text-${color}`}>{stream.name}</span> Careers
+            <span className="text-muted-foreground font-medium text-2xl sm:text-3xl"> · {location}</span>
           </h1>
           <p className="mt-3 text-muted-foreground max-w-2xl">
-            Explore top career roles in {stream.name}. Choose a role to discover courses, skills, roadmap and job opportunities.
+            Explore top career roles in {stream.name} relevant to {location}. Choose a role to discover courses, skills, roadmap and job opportunities.
           </p>
         </div>
 
         <div className="mb-4 flex items-center gap-2">
           <div className={`h-6 w-1 rounded-full bg-${color}`} />
-          <h2 className="text-lg font-bold">Popular {stream.name} Roles</h2>
+          <h2 className="text-lg font-bold">Popular {stream.name} Roles in {location}</h2>
         </div>
-        <p className="text-sm text-muted-foreground mb-6">Showing {roles.length} role{roles.length !== 1 && "s"} in this category</p>
+        <p className="text-sm text-muted-foreground mb-6">
+          Showing {roles.length} role{roles.length !== 1 && "s"} for {location} · {stream.name}
+        </p>
+
+        {roles.length === 0 && (
+          <div className="rounded-2xl border bg-card p-10 text-center text-muted-foreground mb-6">
+            No results available for this selection. Try a different location or category.
+          </div>
+        )}
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
           {roles.map((r) => (
