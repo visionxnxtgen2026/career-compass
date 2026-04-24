@@ -2,13 +2,14 @@ import { Link, useParams, Navigate } from "react-router-dom";
 import { PageLayout } from "@/components/layout/PageLayout";
 import { BackButton } from "@/components/BackButton";
 import { Button } from "@/components/ui/button";
-import { Wallet, Briefcase, TrendingUp, GraduationCap, BookOpen, Users, Trophy, ArrowRight, Flag } from "lucide-react";
-import { IT_ROLES } from "@/data/mock";
+import { Wallet, Briefcase, TrendingUp, GraduationCap, BookOpen, Users, Trophy, ArrowRight, Flag, ExternalLink, Info } from "lucide-react";
+import { getRoleById, APPLY_LINKS } from "@/data/mock";
 
 const RoleDetail = () => {
-  const { id } = useParams();
-  const role = IT_ROLES.find((r) => r.id === id);
-  if (!role) return <Navigate to="/streams/it" replace />;
+  const { id = "" } = useParams();
+  const role = getRoleById(id);
+  if (!role) return <Navigate to="/streams" replace />;
+  const apply = APPLY_LINKS[id];
 
   return (
     <PageLayout>

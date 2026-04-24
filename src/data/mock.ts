@@ -522,6 +522,48 @@ export const getRolesFor = (location: string | undefined, streamId: string): Rol
   return baseStream;
 };
 
+// Lookup any role by id (regardless of stream/location).
+export const getRoleById = (id: string): Role | undefined => ROLE_BY_ID[id];
+
+// Official application / information portals for each exam or career.
+// If a role isn't listed here, the UI shows a friendly "info not available" message.
+export const APPLY_LINKS: Record<string, { url: string; label: string }> = {
+  // Tamil Nadu state exams
+  "tnpsc-group-1": { url: "https://www.tnpsc.gov.in/", label: "Apply on TNPSC Portal" },
+  "tnpsc-group-2": { url: "https://www.tnpsc.gov.in/", label: "Apply on TNPSC Portal" },
+  "tnusrb-police": { url: "https://www.tnusrbonline.org/", label: "Apply on TNUSRB Portal" },
+  "trb-teacher": { url: "https://www.trb.tn.gov.in/", label: "Apply on TRB Tamil Nadu" },
+  // Other state PSCs
+  "mpsc-state": { url: "https://mpsc.gov.in/", label: "Apply on MPSC Portal" },
+  "kpsc-state": { url: "https://kpsc.kar.nic.in/", label: "Apply on KPSC Portal" },
+  "kpsc-kerala": { url: "https://www.keralapsc.gov.in/", label: "Apply on Kerala PSC" },
+  // Central exams
+  "upsc-civils": { url: "https://upsc.gov.in/", label: "Apply on UPSC Portal" },
+  "ssc-cgl": { url: "https://ssc.gov.in/", label: "Apply on SSC Portal" },
+  "ssc-chsl": { url: "https://ssc.gov.in/", label: "Apply on SSC Portal" },
+  "rrb-ntpc": { url: "https://www.rrbcdg.gov.in/", label: "Apply on RRB Portal" },
+  "rrb-group-d": { url: "https://www.rrbcdg.gov.in/", label: "Apply on RRB Portal" },
+  "ibps-po": { url: "https://www.ibps.in/", label: "Apply on IBPS Portal" },
+  "ibps-clerk": { url: "https://www.ibps.in/", label: "Apply on IBPS Portal" },
+  "sbi-po": { url: "https://sbi.co.in/web/careers", label: "Apply on SBI Careers" },
+  "rbi-grade-b": { url: "https://opportunities.rbi.org.in/", label: "Apply on RBI Portal" },
+  "nda": { url: "https://upsc.gov.in/", label: "Apply via UPSC (NDA)" },
+  "cds": { url: "https://upsc.gov.in/", label: "Apply via UPSC (CDS)" },
+  "ctet": { url: "https://ctet.nic.in/", label: "Apply on CTET Portal" },
+  "state-psc-exams": { url: "https://www.google.com/search?q=state+public+service+commission+notification", label: "Find State PSC Notifications" },
+  "state-police": { url: "https://www.google.com/search?q=state+police+constable+recruitment", label: "Find State Police Recruitments" },
+  "isro-scientist": { url: "https://www.isro.gov.in/Careers.html", label: "Apply on ISRO Careers" },
+  "drdo-scientist": { url: "https://drdo.gov.in/careers", label: "Apply on DRDO Careers" },
+  "nabard-grade-a": { url: "https://www.nabard.org/careernotices.aspx", label: "Apply on NABARD Portal" },
+  "lic-aao": { url: "https://licindia.in/Bottom-Links/careers", label: "Apply on LIC Careers" },
+  // International
+  "intl-sat": { url: "https://satsuite.collegeboard.org/sat/registration", label: "Register for SAT" },
+  "intl-gre": { url: "https://www.ets.org/gre.html", label: "Register for GRE" },
+  "intl-gmat": { url: "https://www.mba.com/exams/gmat-exam", label: "Register for GMAT" },
+  "intl-ielts": { url: "https://www.ielts.org/", label: "Register for IELTS" },
+  "intl-toefl": { url: "https://www.ets.org/toefl", label: "Register for TOEFL" },
+};
+
 export type RoadmapStep = {
   step: number;
   title: string;
