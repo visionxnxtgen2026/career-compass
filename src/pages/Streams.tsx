@@ -9,8 +9,7 @@ const Streams = () => {
   const navigate = useNavigate();
   const choose = (id: string) => {
     saveSelection({ stream: id });
-    if (id === "it") navigate("/streams/it");
-    else navigate("/streams/it"); // fallback to IT for demo
+    navigate(`/streams/${id}`);
   };
 
   return (
