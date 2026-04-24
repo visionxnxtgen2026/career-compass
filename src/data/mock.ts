@@ -418,11 +418,13 @@ export const ALL_ROLES: Role[] = [
 // (location, stream) pair. `null` means "show everything from that stream".
 export type LocationKey = "India" | "International" | string; // state names also accepted
 
+// State-only exams: ONLY exams conducted by/for that specific state.
+// No central exams mixed in — those are shown when user picks "India".
 const STATE_GOVT_EXAMS: Record<string, string[]> = {
-  "Tamil Nadu": ["tnpsc-group-1", "tnpsc-group-2", "tnusrb-police", "trb-teacher", "ssc-cgl", "ssc-chsl", "rrb-ntpc", "ibps-po", "upsc-civils"],
-  "Maharashtra": ["mpsc-state", "ssc-cgl", "ssc-chsl", "rrb-ntpc", "upsc-civils", "ibps-po", "nda", "state-police"],
-  "Karnataka": ["kpsc-state", "ssc-cgl", "ssc-chsl", "rrb-ntpc", "upsc-civils", "ibps-po", "state-police"],
-  "Kerala": ["kpsc-kerala", "ssc-cgl", "ssc-chsl", "rrb-ntpc", "upsc-civils", "ibps-po", "state-police"],
+  "Tamil Nadu": ["tnpsc-group-1", "tnpsc-group-2", "tnusrb-police", "trb-teacher"],
+  "Maharashtra": ["mpsc-state"],
+  "Karnataka": ["kpsc-state"],
+  "Kerala": ["kpsc-kerala"],
 };
 
 const INDIA_GOVT_EXAMS = [
