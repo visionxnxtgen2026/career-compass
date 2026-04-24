@@ -341,6 +341,106 @@ export const ALL_ROLES: Role[] = [
   ...ARTS_ROLES, ...MEDICAL_ROLES, ...LAW_ROLES, ...OTHER_ROLES,
 ];
 
+// ===== Location + Category filtering =====
+// `LOCATION_SCOPE` returns the set of role IDs that are relevant for a given
+// (location, stream) pair. `null` means "show everything from that stream".
+export type LocationKey = "India" | "International" | string; // state names also accepted
+
+const STATE_GOVT_EXAMS: Record<string, string[]> = {
+  "Tamil Nadu": ["tnpsc-group-1", "tnpsc-group-2", "tnusrb-police", "trb-teacher"],
+  "Maharashtra": ["mpsc-state", "ssc-cgl", "upsc-civils"],
+  "Karnataka": ["kpsc-state", "ssc-cgl", "upsc-civils"],
+  "Kerala": ["kpsc-kerala", "ssc-cgl", "upsc-civils"],
+};
+
+const INDIA_GOVT_EXAMS = ["upsc-civils", "ssc-cgl", "ibps-po", "rbi-grade-b"];
+const INTL_GOVT_EXAMS = ["intl-sat", "intl-gre", "intl-gmat", "intl-ielts", "intl-toefl"];
+
+// Extra roles only shown for specific locations (state PSCs + international exams)
+export const LOCATION_EXTRA_ROLES: Role[] = [
+  mk("mpsc-state", "MPSC State Services", "Maharashtra Public Service Commission state-level officer roles.", "Government Exams", Landmark, "primary", "High Demand",
+    ["General Studies", "Marathi", "Aptitude", "Current Affairs"],
+    "Any Bachelor's Degree", "Graduation in any stream",
+    ["Polity", "Economy", "History", "Geography"],
+    ["Graduates", "Age 19-38", "Maharashtra Residents"],
+    ["Maharashtra State Govt"], "₹40,000 – ₹1,50,000 / month"),
+  mk("kpsc-state", "KPSC State Services", "Karnataka Public Service Commission officer roles.", "Government Exams", Landmark, "info", "High Demand",
+    ["General Studies", "Kannada", "Aptitude", "Current Affairs"],
+    "Any Bachelor's Degree", "Graduation in any stream",
+    ["Polity", "Economy", "History", "Geography"],
+    ["Graduates", "Karnataka Residents"],
+    ["Karnataka State Govt"], "₹40,000 – ₹1,50,000 / month"),
+  mk("kpsc-kerala", "Kerala PSC", "Kerala Public Service Commission roles in state departments.", "Government Exams", Landmark, "success", "High Demand",
+    ["General Knowledge", "Malayalam", "Aptitude"],
+    "10+2 / Bachelor's Degree", "Varies by post",
+    ["GK", "Maths", "Reasoning"],
+    ["Kerala Residents"],
+    ["Kerala State Govt"], "₹30,000 – ₹1,20,000 / month"),
+
+  // International exams (Government Exams category for entrance/standardised tests)
+  mk("intl-sat", "SAT (USA)", "Standardised test for undergraduate admissions in the USA.", "Government Exams", GraduationCap, "info", "High Demand",
+    ["English", "Math", "Reading Comprehension", "Essay Writing"],
+    "10+2 (Higher Secondary)", "Currently in 11th/12th",
+    ["Algebra", "Geometry", "Reading", "Writing"],
+    ["High School Students aiming for US universities"],
+    ["Harvard", "MIT", "Stanford", "UC Berkeley"], "Scholarship-based"),
+  mk("intl-gre", "GRE", "Graduate Record Examination for masters/PhD admissions abroad.", "Government Exams", GraduationCap, "primary", "High Demand",
+    ["Verbal Reasoning", "Quantitative", "Analytical Writing"],
+    "Bachelor's Degree", "Final-year UG students",
+    ["Vocabulary", "Maths", "Critical Reasoning"],
+    ["Graduates aiming for MS abroad"],
+    ["US, Canada, Germany Universities"], "Scholarship-based"),
+  mk("intl-gmat", "GMAT", "Entrance test for top global MBA programs.", "Government Exams", Briefcase, "warning", "High Demand",
+    ["Quant", "Verbal", "Integrated Reasoning", "AWA"],
+    "Bachelor's Degree", "Working professionals preferred",
+    ["Maths", "Logic", "English"],
+    ["MBA aspirants"],
+    ["Harvard Business School", "Wharton", "INSEAD", "ISB"], "Scholarship-based"),
+  mk("intl-ielts", "IELTS", "English proficiency test for study/work abroad.", "Government Exams", GraduationCap, "success", "High Demand",
+    ["Listening", "Reading", "Writing", "Speaking"],
+    "No formal qualification", "Anyone aspiring to study/work abroad",
+    ["English Grammar", "Vocabulary", "Pronunciation"],
+    ["Students", "Working Professionals", "Migrants"],
+    ["UK, Australia, Canada, NZ Universities"], "Test fee ~₹17,000"),
+  mk("intl-toefl", "TOEFL", "Test of English for non-native speakers, accepted globally.", "Government Exams", GraduationCap, "info", "High Demand",
+    ["Reading", "Listening", "Speaking", "Writing"],
+    "No formal qualification", "Students aiming for US universities",
+    ["English Comprehension", "Speaking Fluency"],
+    ["Students", "Researchers"],
+    ["US Universities", "Global Institutions"], "Test fee ~₹16,900"),
+];
+
+const ROLE_BY_ID: Record<string, Role> = Object.fromEntries(
+  [...ALL_ROLES, ...LOCATION_EXTRA_ROLES].map((r) => [r.id, r])
+);
+
+/**
+ * Filter roles by both location AND stream category.
+ * Rules:
+ *  - "International": for `govt` show standardised global exams; for other streams
+ *    show remote/global-friendly roles (default IT/banking/etc as-is).
+ *  - State name (e.g. "Tamil Nadu"): for `govt` show state PSC + a couple of central exams.
+ *  - "India" or unknown: show the full stream list.
+ */
+export const getRolesFor = (location: string | undefined, streamId: string): Role[] => {
+  const baseStream = ROLES_BY_STREAM[streamId] || [];
+  if (!location || location === "India") {
+    if (streamId === "govt") return INDIA_GOVT_EXAMS.map((id) => ROLE_BY_ID[id]).filter(Boolean);
+    return baseStream;
+  }
+  if (location === "International") {
+    if (streamId === "govt") return INTL_GOVT_EXAMS.map((id) => ROLE_BY_ID[id]).filter(Boolean);
+    if (streamId === "medical" || streamId === "law") return []; // location-restricted
+    return baseStream; // IT, banking, mba, arts, other apply globally
+  }
+  // Specific Indian state
+  if (streamId === "govt") {
+    const ids = STATE_GOVT_EXAMS[location] || INDIA_GOVT_EXAMS;
+    return ids.map((id) => ROLE_BY_ID[id]).filter(Boolean);
+  }
+  return baseStream;
+};
+
 export type RoadmapStep = {
   step: number;
   title: string;

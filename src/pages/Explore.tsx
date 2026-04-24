@@ -10,7 +10,20 @@ const triggerUpdate = () => window.dispatchEvent(new Event("careerpath:selection
 const Explore = () => {
   const navigate = useNavigate();
   const choose = (country: string) => {
-    saveSelection({ flow: "student", country });
+    if (country === "International") {
+      saveSelection({ flow: "student", country, state: "International", district: undefined });
+      triggerUpdate();
+      navigate("/streams");
+      return;
+    }
+    if (country === "Tamil Nadu") {
+      // user picked the state directly — skip the state-picker step
+      saveSelection({ flow: "student", country: "India", state: "Tamil Nadu", district: undefined });
+      triggerUpdate();
+      navigate("/streams");
+      return;
+    }
+    saveSelection({ flow: "student", country, state: undefined, district: undefined });
     triggerUpdate();
     navigate("/state");
   };
