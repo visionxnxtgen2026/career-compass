@@ -561,8 +561,10 @@ export const getRolesFor = (location: string | undefined, streamId: string): Rol
   }
   // Specific Indian state
   if (streamId === "govt") {
-    const ids = STATE_GOVT_EXAMS[location] || INDIA_GOVT_EXAMS;
-    return ids.map((id) => ROLE_BY_ID[id]).filter(Boolean);
+    const ids = STATE_GOVT_EXAMS[location];
+    if (ids && ids.length) return ids.map((id) => ROLE_BY_ID[id]).filter(Boolean);
+    // Unknown state — show only the generic state PSC placeholder, never central exams
+    return ["state-psc-exams", "state-police"].map((id) => ROLE_BY_ID[id]).filter(Boolean);
   }
   return baseStream;
 };
