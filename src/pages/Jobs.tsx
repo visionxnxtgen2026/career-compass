@@ -16,13 +16,29 @@ const Jobs = () => {
   const [cat, setCat] = useState<Job["category"] | "All">("All");
   const [type, setType] = useState<Job["type"] | "All">("All");
 
+  // Match jobs by selected district / state. Remote roles always show.
+  const matchesLocation = (jobLoc: string) => {
+    const loc = jobLoc.toLowerCase();
+    if (loc.includes("remote")) return true;
+    if (sel.district && loc.includes(sel.district.toLowerCase())) return true;
+    if (sel.state && loc.includes(sel.state.toLowerCase())) return true;
+    if (!sel.district && !sel.state) return true;
+    return false;
+  };
+
   const filtered = useMemo(() => {
     return JOBS.filter((j) =>
+      matchesLocation(j.location) &&
       (cat === "All" || j.category === cat) &&
       (type === "All" || j.type === type) &&
       (q === "" || j.role.toLowerCase().includes(q.toLowerCase()) || j.company.toLowerCase().includes(q.toLowerCase()))
     );
-  }, [q, cat, type]);
+  }, [q, cat, type, sel.district, sel.state]);
+
+  const buildApplyUrl = (j: Job) => {
+    const query = encodeURIComponent(`${j.role} ${j.company} ${j.location}`);
+    return `https://www.linkedin.com/jobs/search/?keywords=${query}`;
+  };
 
   return (
     <PageLayout>
@@ -110,8 +126,10 @@ const Jobs = () => {
                 </span>
               </div>
 
-              <Button className="w-full bg-gradient-primary mt-auto gap-2">
-                Apply Now <ExternalLink className="h-3.5 w-3.5" />
+              <Button asChild className="w-full bg-gradient-primary mt-auto gap-2">
+                <a href={buildApplyUrl(j)} target="_blank" rel="noopener noreferrer">
+                  Apply Now <ExternalLink className="h-3.5 w-3.5" />
+                </a>
               </Button>
             </div>
           ))}
