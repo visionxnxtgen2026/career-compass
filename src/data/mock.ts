@@ -340,6 +340,8 @@ export const ALL_ROLES: Role[] = [
   ...IT_ROLES, ...GOVT_ROLES, ...BANKING_ROLES, ...MBA_ROLES,
   ...ARTS_ROLES, ...MEDICAL_ROLES, ...LAW_ROLES, ...OTHER_ROLES,
 ];
+
+export type RoadmapStep = {
   step: number;
   title: string;
   duration: string;
