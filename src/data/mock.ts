@@ -503,4 +503,10 @@ export const JOBS: Job[] = [
   { id: "j6", company: "Razorpay", role: "Frontend Developer", location: "Remote", experience: "1-3 Yrs", type: "Remote", category: "Work From Home", applyBy: "15 Jun", salary: "₹8 – 14 LPA", logo: "RZ" },
   { id: "j7", company: "Local IT Hub", role: "Junior Web Developer", location: "Coimbatore, Tamil Nadu", experience: "0-1 Yrs", type: "Full Time", category: "Small Companies", applyBy: "20 Jun", salary: "₹2.5 – 4 LPA", logo: "LI" },
   { id: "j8", company: "TCS", role: "Assistant System Engineer", location: "Chennai, Tamil Nadu", experience: "0-2 Yrs", type: "Full Time", category: "MNCs", applyBy: "5 Jun", salary: "₹3.5 LPA", logo: "TC" },
+  { id: "j9", company: "Cognizant", role: "Programmer Analyst Trainee", location: "Trichy, Tamil Nadu", experience: "0-1 Yrs", type: "Full Time", category: "MNCs", applyBy: "12 Jun", salary: "₹4 LPA", logo: "CO" },
+  { id: "j10", company: "Wipro", role: "Project Engineer", location: "Trichy, Tamil Nadu", experience: "0-2 Yrs", type: "Full Time", category: "MNCs", applyBy: "18 Jun", salary: "₹3.5 – 5 LPA", logo: "WI" },
+  { id: "j11", company: "BHEL", role: "Graduate Apprentice", location: "Trichy, Tamil Nadu", experience: "0-1 Yrs", type: "Internship", category: "Internships", applyBy: "22 Jun", salary: "₹15k/mo", logo: "BH" },
+  { id: "j12", company: "Sify Technologies", role: "Network Engineer", location: "Trichy, Tamil Nadu", experience: "1-3 Yrs", type: "Full Time", category: "Small Companies", applyBy: "30 Jun", salary: "₹3 – 5 LPA", logo: "SF" },
+  { id: "j13", company: "Aspire Systems", role: "Associate Software Engineer", location: "Madurai, Tamil Nadu", experience: "0-2 Yrs", type: "Full Time", category: "MNCs", applyBy: "25 Jun", salary: "₹4 – 6 LPA", logo: "AS" },
+  { id: "j14", company: "Kaar Tech", role: "SAP Developer Trainee", location: "Coimbatore, Tamil Nadu", experience: "0-1 Yrs", type: "Full Time", category: "Startups", applyBy: "28 Jun", salary: "₹4 LPA", logo: "KA" },
 ];
