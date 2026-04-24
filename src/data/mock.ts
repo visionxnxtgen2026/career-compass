@@ -55,6 +55,8 @@ export type Role = {
   opportunities: string;
 };
 
+export const ROLES_BY_STREAM: Record<string, Role[]> = {};
+
 export const IT_ROLES: Role[] = [
   { id: "software-developer", name: "Software Developer", description: "Build software applications and solve real-world problems.", category: "IT & Software", icon: Code2, color: "success", demand: "High Demand",
     skills: ["DSA", "Java", "Python", "Git", "SQL", "System Design"], education: { degree: "B.E / B.Tech in CSE", alt: "BCA, B.Sc (CS/IT), MCA" },
