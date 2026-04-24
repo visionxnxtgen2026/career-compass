@@ -2,13 +2,14 @@ import { Link, useParams, Navigate } from "react-router-dom";
 import { PageLayout } from "@/components/layout/PageLayout";
 import { BackButton } from "@/components/BackButton";
 import { Button } from "@/components/ui/button";
-import { Wallet, Briefcase, TrendingUp, GraduationCap, BookOpen, Users, Trophy, ArrowRight, Flag } from "lucide-react";
-import { IT_ROLES } from "@/data/mock";
+import { Wallet, Briefcase, TrendingUp, GraduationCap, BookOpen, Users, Trophy, ArrowRight, Flag, ExternalLink, Info } from "lucide-react";
+import { getRoleById, APPLY_LINKS } from "@/data/mock";
 
 const RoleDetail = () => {
-  const { id } = useParams();
-  const role = IT_ROLES.find((r) => r.id === id);
-  if (!role) return <Navigate to="/streams/it" replace />;
+  const { id = "" } = useParams();
+  const role = getRoleById(id);
+  if (!role) return <Navigate to="/streams" replace />;
+  const apply = APPLY_LINKS[id];
 
   return (
     <PageLayout>
@@ -95,6 +96,34 @@ const RoleDetail = () => {
             </div>
             <div className="text-xs text-muted-foreground text-center mt-3">& many more...</div>
           </Section>
+        </div>
+
+        {/* Apply Now */}
+        <div className="rounded-2xl bg-card border p-6 mb-6 flex flex-wrap items-center justify-between gap-4">
+          <div className="flex items-center gap-4">
+            <div className={`grid h-12 w-12 place-items-center rounded-xl bg-${role.color}-soft text-${role.color}`}>
+              {apply ? <ExternalLink className="h-6 w-6" /> : <Info className="h-6 w-6" />}
+            </div>
+            <div>
+              <div className="font-bold">Apply for {role.name}</div>
+              <div className="text-xs text-muted-foreground">
+                {apply
+                  ? "You'll be redirected to the official portal to apply."
+                  : "Application info is not available yet for this role. Please check back soon."}
+              </div>
+            </div>
+          </div>
+          {apply ? (
+            <a href={apply.url} target="_blank" rel="noopener noreferrer">
+              <Button className="bg-gradient-primary shadow-glow gap-2">
+                {apply.label} <ExternalLink className="h-4 w-4" />
+              </Button>
+            </a>
+          ) : (
+            <Button disabled variant="outline" className="gap-2">
+              Apply Link Unavailable
+            </Button>
+          )}
         </div>
 
         {/* CTA */}
