@@ -419,13 +419,20 @@ export const ALL_ROLES: Role[] = [
 export type LocationKey = "India" | "International" | string; // state names also accepted
 
 const STATE_GOVT_EXAMS: Record<string, string[]> = {
-  "Tamil Nadu": ["tnpsc-group-1", "tnpsc-group-2", "tnusrb-police", "trb-teacher"],
-  "Maharashtra": ["mpsc-state", "ssc-cgl", "upsc-civils"],
-  "Karnataka": ["kpsc-state", "ssc-cgl", "upsc-civils"],
-  "Kerala": ["kpsc-kerala", "ssc-cgl", "upsc-civils"],
+  "Tamil Nadu": ["tnpsc-group-1", "tnpsc-group-2", "tnusrb-police", "trb-teacher", "ssc-cgl", "ssc-chsl", "rrb-ntpc", "ibps-po", "upsc-civils"],
+  "Maharashtra": ["mpsc-state", "ssc-cgl", "ssc-chsl", "rrb-ntpc", "upsc-civils", "ibps-po", "nda", "state-police"],
+  "Karnataka": ["kpsc-state", "ssc-cgl", "ssc-chsl", "rrb-ntpc", "upsc-civils", "ibps-po", "state-police"],
+  "Kerala": ["kpsc-kerala", "ssc-cgl", "ssc-chsl", "rrb-ntpc", "upsc-civils", "ibps-po", "state-police"],
 };
 
-const INDIA_GOVT_EXAMS = ["upsc-civils", "ssc-cgl", "ibps-po", "rbi-grade-b"];
+const INDIA_GOVT_EXAMS = [
+  "upsc-civils", "ssc-cgl", "ssc-chsl", "rrb-ntpc", "rrb-group-d",
+  "ibps-po", "sbi-po", "ibps-clerk", "rbi-grade-b",
+  "nda", "cds", "state-police",
+  "ctet", "trb-teacher",
+  "state-psc-exams", "isro-scientist", "drdo-scientist",
+  "nabard-grade-a", "lic-aao",
+];
 const INTL_GOVT_EXAMS = ["intl-sat", "intl-gre", "intl-gmat", "intl-ielts", "intl-toefl"];
 
 // Extra roles only shown for specific locations (state PSCs + international exams)
