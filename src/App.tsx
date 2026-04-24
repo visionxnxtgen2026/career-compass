@@ -9,6 +9,7 @@ import Explore from "./pages/Explore.tsx";
 import SelectState from "./pages/SelectState.tsx";
 import Streams from "./pages/Streams.tsx";
 import ITRoles from "./pages/ITRoles.tsx";
+import StreamRoles from "./pages/StreamRoles.tsx";
 import RoleDetail from "./pages/RoleDetail.tsx";
 import Roadmap from "./pages/Roadmap.tsx";
 import JobLocation from "./pages/JobLocation.tsx";
@@ -29,6 +30,7 @@ const App = () => (
           <Route path="/state" element={<SelectState />} />
           <Route path="/streams" element={<Streams />} />
           <Route path="/streams/it" element={<ITRoles />} />
+          <Route path="/streams/:category" element={<StreamRoles />} />
           <Route path="/role/:id" element={<RoleDetail />} />
           <Route path="/role/:id/roadmap" element={<Roadmap />} />
           <Route path="/jobs/location" element={<JobLocation />} />
