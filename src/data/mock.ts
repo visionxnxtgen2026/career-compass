@@ -422,9 +422,14 @@ export type LocationKey = "India" | "International" | string; // state names als
 // No central exams mixed in — those are shown when user picks "India".
 const STATE_GOVT_EXAMS: Record<string, string[]> = {
   "Tamil Nadu": ["tnpsc-group-1", "tnpsc-group-2", "tnusrb-police", "trb-teacher"],
-  "Maharashtra": ["mpsc-state"],
-  "Karnataka": ["kpsc-state"],
-  "Kerala": ["kpsc-kerala"],
+  "Maharashtra": ["mpsc-state", "mh-police", "mh-tet"],
+  "Karnataka": ["kpsc-state", "ka-police", "ka-tet"],
+  "Kerala": ["kpsc-kerala", "kl-police", "kl-tet"],
+  "Andhra Pradesh": ["appsc-state", "ap-police", "ap-tet"],
+  "Telangana": ["tspsc-state", "ts-police", "ts-tet"],
+  "Uttar Pradesh": ["uppsc-state", "up-police", "up-tet"],
+  "West Bengal": ["wbpsc-state", "wb-police", "wb-tet"],
+  "Gujarat": ["gpsc-state", "gj-police", "gj-tet"],
 };
 
 const INDIA_GOVT_EXAMS = [
@@ -436,6 +441,34 @@ const INDIA_GOVT_EXAMS = [
   "nabard-grade-a", "lic-aao",
 ];
 const INTL_GOVT_EXAMS = ["intl-sat", "intl-gre", "intl-gmat", "intl-ielts", "intl-toefl"];
+
+// Helper to generate a state-PSC, state-police and state-TET entry for a state
+const stateSet = (
+  prefix: string,
+  stateName: string,
+  pscName: string,
+  language: string,
+  color: Role["color"]
+): Role[] => [
+  mk(`${prefix}-state`, pscName, `${pscName} — officer-level recruitment for ${stateName} state government.`, "Government Exams", Landmark, color, "High Demand",
+    ["General Studies", language, "Aptitude", "Current Affairs", "Essay Writing"],
+    "Any Bachelor's Degree", "Graduation in any stream",
+    [`${stateName} History`, "Polity", "Economy", "Geography"],
+    ["Graduates", "Age 21-32", `${stateName} Residents`],
+    [`${stateName} State Government`], "₹40,000 – ₹1,50,000 / month"),
+  mk(`${prefix}-police`, `${stateName} Police`, `Constable & SI recruitment for ${stateName} Police Department.`, "Government Exams", Shield, "warning", "High Demand",
+    ["Physical Fitness", "GK", "Reasoning", language],
+    "10+2 / Graduation (post-wise)", "12th Pass / Any Degree",
+    ["GK", "Reasoning", "Numerical Ability"],
+    ["12th / Graduates", "Physically Fit"],
+    [`${stateName} Police Department`], "₹21,000 – ₹70,000 / month"),
+  mk(`${prefix}-tet`, `${stateName} TET`, `${stateName} Teacher Eligibility Test for state government schools.`, "Government Exams", GraduationCap, "success", "High Demand",
+    ["Pedagogy", "Subject Knowledge", "Child Psychology", language],
+    "B.Ed + Bachelor's", "D.El.Ed for Primary",
+    ["Pedagogy", "Maths", "EVS", "Languages"],
+    ["B.Ed / D.El.Ed Holders"],
+    [`${stateName} Govt Schools`], "₹30,000 – ₹65,000 / month"),
+];
 
 // Extra roles only shown for specific locations (state PSCs + international exams)
 export const LOCATION_EXTRA_ROLES: Role[] = [
@@ -457,6 +490,18 @@ export const LOCATION_EXTRA_ROLES: Role[] = [
     ["GK", "Maths", "Reasoning"],
     ["Kerala Residents"],
     ["Kerala State Govt"], "₹30,000 – ₹1,20,000 / month"),
+
+  // Per-state Police + TET sets for the states above
+  ...stateSet("mh", "Maharashtra", "Maharashtra Police & TET", "Marathi", "primary").slice(1),
+  ...stateSet("ka", "Karnataka", "Karnataka Police & TET", "Kannada", "info").slice(1),
+  ...stateSet("kl", "Kerala", "Kerala Police & TET", "Malayalam", "success").slice(1),
+
+  // New states — full set (PSC + Police + TET)
+  ...stateSet("appsc", "Andhra Pradesh", "APPSC Group Services", "Telugu", "primary"),
+  ...stateSet("tspsc", "Telangana", "TSPSC Group Services", "Telugu", "info"),
+  ...stateSet("uppsc", "Uttar Pradesh", "UPPSC State Services", "Hindi", "warning"),
+  ...stateSet("wbpsc", "West Bengal", "WBPSC State Services", "Bengali", "pink"),
+  ...stateSet("gpsc", "Gujarat", "GPSC State Services", "Gujarati", "orange"),
 
   // International exams (Government Exams category for entrance/standardised tests)
   mk("intl-sat", "SAT (USA)", "Standardised test for undergraduate admissions in the USA.", "Government Exams", GraduationCap, "info", "High Demand",
