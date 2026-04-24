@@ -1,16 +1,18 @@
 import { Link, useParams, Navigate } from "react-router-dom";
 import { PageLayout } from "@/components/layout/PageLayout";
 import { BackButton } from "@/components/BackButton";
-import { ArrowRight, HelpCircle } from "lucide-react";
-import { ROLES_BY_STREAM, STREAMS } from "@/data/mock";
-import { saveSelection } from "@/lib/storage";
+import { ArrowRight, HelpCircle, MapPin } from "lucide-react";
+import { STREAMS, getRolesFor } from "@/data/mock";
+import { loadSelection, saveSelection } from "@/lib/storage";
 
 const StreamRoles = () => {
   const { category = "" } = useParams();
   const stream = STREAMS.find((s) => s.id === category);
-  const roles = ROLES_BY_STREAM[category];
+  const sel = loadSelection();
+  const location = sel.state || sel.country || "India";
+  const roles = stream ? getRolesFor(location, category) : [];
 
-  if (!stream || !roles) return <Navigate to="/streams" replace />;
+  if (!stream) return <Navigate to="/streams" replace />;
 
   const color = stream.color;
 
